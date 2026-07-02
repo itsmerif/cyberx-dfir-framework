@@ -8,7 +8,9 @@ from routes.cases import cases_bp
 from routes.evidence import evidence_bp
 from routes.events import events_bp
 from routes.timeline import timeline_bp
-
+from modules.engine.incident_engine import build_incidents
+from models.incident import Incident
+from routes.incidents import incident_bp
 
 def create_app():
 
@@ -25,6 +27,7 @@ def create_app():
     app.register_blueprint(evidence_bp)
     app.register_blueprint(events_bp)
     app.register_blueprint(timeline_bp)
+    app.register_blueprint(incident_bp)
     with app.app_context():
         db.create_all()
 

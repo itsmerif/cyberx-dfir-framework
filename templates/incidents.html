@@ -1,0 +1,25 @@
+<h3>Incidents</h3>
+
+<table border="1" class="table table-striped">
+
+    <tr>
+        <th>Title</th>
+        <th>Severity</th>
+        <th>Rule</th>
+        <th>Events</th>
+        <th>First Seen</th>
+        <th>Last Seen</th>
+    </tr>
+
+    {% for i in incidents %}
+    <tr>
+        <td>{{ i.title }}</td>
+        <td>{{ i.severity }}</td>
+        <td>{{ i.rule }}</td>
+        <td>{{ i.event_count }}</td>
+        <td>{{ i.first_seen }}</td>
+        <td>{{ i.last_seen }}</td>
+    </tr>
+    {% endfor %}
+
+</table>

@@ -5,18 +5,14 @@
 <h3>Cases</h3>
 
 <form method="POST" action="/cases/create" class="mb-3">
-
     <input class="form-control mb-2" name="case_name" placeholder="Case Name">
-
     <textarea class="form-control mb-2" name="description" placeholder="Description"></textarea>
-
     <button class="btn btn-primary">Create Case</button>
-
 </form>
 
 <hr>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-dark">
 
     <tr>
         <th>ID</th>
@@ -34,22 +30,23 @@
         <td>{{ c.created_at }}</td>
 
         <td>
-            <a href="/events/{{ c.id }}" class="btn btn-sm btn-info">
-                View Events
-            </a>
-        </td>
-		<td>
-    <a href="/events/{{ c.id }}" class="btn btn-sm btn-info">
-        Events
-    </a>
-<a href="/timeline/{{ c.id }}" class="btn btn-sm btn-success">
-    Timeline
-</a>
-    <a href="/evidence/{{ c.id }}" class="btn btn-sm btn-warning">
-        Upload Evidence
-    </a>
-</td>
 
+            <!-- 👀 View Events -->
+            <a href="/events/{{ c.id }}" class="btn btn-sm btn-info mb-1">
+                Events
+            </a>
+
+            <!-- 📦 Add Evidence -->
+            <a href="/evidence/{{ c.id }}" class="btn btn-sm btn-success mb-1">
+                Add Evidence
+            </a>
+
+            <!-- 🚨 View Incidents -->
+            <a href="/incidents/{{ c.id }}" class="btn btn-sm btn-warning mb-1">
+                Incidents
+            </a>
+
+        </td>
     </tr>
     {% endfor %}
 

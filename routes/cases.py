@@ -7,15 +7,22 @@ from database.db import db
 cases_bp = Blueprint("cases", __name__)
 
 
+# -------------------------
+# LIST ALL CASES
+# -------------------------
 @cases_bp.route("/cases", methods=["GET"])
 @login_required
 def list_cases():
 
     cases = Case.query.all()
 
+    # ❌ FIX: removed undefined case_id
     return render_template("cases.html", cases=cases)
 
 
+# -------------------------
+# CREATE NEW CASE
+# -------------------------
 @cases_bp.route("/cases/create", methods=["POST"])
 @login_required
 def create_case():
