@@ -449,3 +449,71 @@ Clear Filters
     </div>
 
 </div>
+
+<nav class="mt-4">
+
+<ul class="pagination justify-content-center">
+
+{% if pagination.has_prev %}
+
+<li class="page-item">
+
+<a
+class="page-link"
+
+href="?page={{ pagination.prev_num }}&search={{ search }}&severity={{ severity_filter }}&computer={{ computer_filter }}&channel={{ channel_filter }}&rule={{ rule_filter }}&eventid={{ eventid_filter }}"
+>
+
+Previous
+
+</a>
+
+</li>
+
+{% endif %}
+
+{% for p in pagination.iter_pages() %}
+
+{% if p %}
+
+<li class="page-item {% if p==pagination.page %}active{% endif %}">
+
+<a
+class="page-link"
+
+href="?page={{ p }}&search={{ search }}&severity={{ severity_filter }}&computer={{ computer_filter }}&channel={{ channel_filter }}&rule={{ rule_filter }}&eventid={{ eventid_filter }}"
+>
+
+{{ p }}
+
+</a>
+
+</li>
+
+{% endif %}
+
+{% endfor %}
+
+{% if pagination.has_next %}
+
+<li class="page-item">
+
+<a
+class="page-link"
+
+href="?page={{ pagination.next_num }}&search={{ search }}&severity={{ severity_filter }}&computer={{ computer_filter }}&channel={{ channel_filter }}&rule={{ rule_filter }}&eventid={{ eventid_filter }}"
+>
+
+Next
+
+</a>
+
+</li>
+
+{% endif %}
+
+</ul>
+
+</nav>
+
+{% endblock %}
