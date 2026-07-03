@@ -2,46 +2,304 @@
 
 {% block content %}
 
-<a class="nav-link" href="/cases">Cases</a>
+<div class="container-fluid">
 
-<table class="table table-dark table-striped">
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-    <thead>
-        <tr>
-            <th>Event ID</th>
-            <th>Computer</th>
-            <th>Severity</th>
-            <th>Severity</th>
-            <th>Details</th>
-        </tr>
-    </thead>
+    <h3>
+        <i class="bi bi-list-ul"></i>
+        Event Explorer
+    </h3>
 
-    <tbody>
+    <a href="/events/export/{{ case_id }}" class="btn btn-success">
+        Export CSV
+    </a>
 
-        {% for e in events %}
+</div>
 
-        <tr>
-            <td>{{ e.event_id }}</td>
-            <td>{{ e.computer }}</td>
-            <td>{{ e.severity }}</td>
+<!-- ========================= -->
+<!-- STATISTICS -->
+<!-- ========================= -->
 
-            <td>
-                {% if e.severity == "high" %}
-                    <span class="badge bg-danger">HIGH</span>
-                {% elif e.severity == "medium" %}
-                    <span class="badge bg-warning text-dark">MED</span>
-                {% else %}
-                    <span class="badge bg-secondary">LOW</span>
-                {% endif %}
-            </td>
+<div class="row mb-4">
 
-            <td>{{ e.details }}</td>
-        </tr>
+    <div class="col-md-2">
 
-        {% endfor %}
+        <div class="card bg-dark text-white border-primary">
 
-    </tbody>
+            <div class="card-body text-center">
 
-</table>
+                <h5>{{ total }}</h5>
 
-{% endblock %}
+                <small>Total Events</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <div class="card border-danger">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-danger">{{ critical }}</h5>
+
+                <small>Critical</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <div class="card border-warning">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-warning">{{ high }}</h5>
+
+                <small>High</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <div class="card border-info">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-info">{{ medium }}</h5>
+
+                <small>Medium</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <div class="card border-success">
+
+            <div class="card-body text-center">
+
+                <h5 class="text-success">{{ low }}</h5>
+
+                <small>Low</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-md-2">
+
+        <div class="card border-secondary">
+
+            <div class="card-body text-center">
+
+                <h5>{{ informational }}</h5>
+
+                <small>Info</small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- FILTERS -->
+<!-- ========================= -->
+
+<form method="GET">
+
+<div class="card mb-4">
+
+<div class="card-body">
+
+<div class="row g-3">
+
+<div class="col-md-3">
+
+<input
+class="form-control"
+name="search"
+placeholder="Keyword Search"
+value="{{ search }}"
+>
+
+</div>
+
+<div class="col-md-2">
+
+<select
+name="severity"
+class="form-select"
+>
+
+<option value="">Severity</option>
+
+<option value="critical"
+{% if severity_filter=="critical" %}selected{% endif %}>
+Critical
+</option>
+
+<option value="high"
+{% if severity_filter=="high" %}selected{% endif %}>
+High
+</option>
+
+<option value="medium"
+{% if severity_filter=="medium" %}selected{% endif %}>
+Medium
+</option>
+
+<option value="low"
+{% if severity_filter=="low" %}selected{% endif %}>
+Low
+</option>
+
+<option value="informational"
+{% if severity_filter=="informational" %}selected{% endif %}>
+Informational
+</option>
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<select
+name="computer"
+class="form-select"
+>
+
+<option value="">Computer</option>
+
+{% for c in computers %}
+
+<option
+value="{{ c[0] }}"
+{% if computer_filter==c[0] %}selected{% endif %}
+>
+
+{{ c[0] }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<select
+name="channel"
+class="form-select"
+>
+
+<option value="">Channel</option>
+
+{% for c in channels %}
+
+<option
+value="{{ c[0] }}"
+{% if channel_filter==c[0] %}selected{% endif %}
+>
+
+{{ c[0] }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-3">
+
+<select
+name="rule"
+class="form-select"
+>
+
+<option value="">Rule</option>
+
+{% for r in rules %}
+
+<option
+value="{{ r[0] }}"
+{% if rule_filter==r[0] %}selected{% endif %}
+>
+
+{{ r[0] }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<div class="col-md-2">
+
+<input
+class="form-control"
+name="eventid"
+placeholder="Event ID"
+value="{{ eventid_filter }}"
+>
+
+</div>
+
+<div class="col-md-3">
+
+<button
+class="btn btn-primary w-100"
+>
+
+Apply Filters
+
+</button>
+
+</div>
+
+<div class="col-md-3">
+
+<a
+href="/events/{{ case_id }}"
+class="btn btn-secondary w-100"
+>
+
+Clear Filters
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
